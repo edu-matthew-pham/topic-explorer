@@ -1,6 +1,7 @@
 // app.js
 // Entry point. Owns application state, boot sequence, and UI wiring.
 
+import { startPresentation } from './presentation.js';
 import {
   renderClusters,
   renderNodesOverview,
@@ -129,6 +130,12 @@ function setupUI() {
       alert('Invalid JSON. Check formatting and try again.');
       console.error(err);
     }
+  });
+
+  // Present mode
+  document.getElementById('open-present-btn').addEventListener('click', () => {
+    if (!mapData) { alert('No topic loaded yet.'); return; }
+    startPresentation(mapData);
   });
 
   // Copy learning activity prompt to clipboard
