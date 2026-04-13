@@ -23,27 +23,65 @@ body {
 /* ── Header ──────────────────────────────────────────────────────────────── */
 
 header {
-  padding: 14px 24px;
+  padding: 12px 24px;
   border-bottom: 1px solid var(--border);
   background: var(--bg);
   flex-shrink: 0;
   display: flex;
-  align-items: baseline;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
 }
 
-header h1 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
-
-header .sub {
-  font-size: 12px;
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
   color: var(--muted);
 }
 
+.header-top h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.header-top .sub {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.header-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mode-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2px 4px;
+}
+
+.brand-link {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255,255,255,0.2);
+}
+
+.brand-link:visited {
+  color: var(--muted);
+}
+
+.brand-link:hover {
+  color: var(--text);
+  text-decoration-color: rgba(255,255,255,0.5);
+}
 /* ── Layout ──────────────────────────────────────────────────────────────── */
 
 .main {

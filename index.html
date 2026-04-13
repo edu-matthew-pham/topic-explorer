@@ -10,18 +10,25 @@
 <body>
 
 <header>
-  <h1 id="page-title">Topic Exploration</h1>
-  <div class="sub" id="page-subtitle"></div>
-  <button id="open-prompt-btn">✦ New Topic</button>
-  <div style="display:flex; align-items:baseline; gap:8px; margin-left:16px; padding-left:16px; border-left:1px solid var(--border);">
-    <select id="coaching-width-mode" style="padding:4px 8px; font-size:12px;">
-      <option value="typical" selected>Typical Width</option>
-      <option value="minimum">Minimum Width</option>
-      <option value="wider">Wider</option>
-    </select>
-    <button id="open-learning-prompt-btn">Learning Activity Prompt</button>
+  <div class="header-top">
+    <a href="https://learningwaypoints.com" class="brand-link">Learning Waypoints</a>
+    <span class="header-sep">/</span>
+    <span class="tool-label">Topic Explorer</span>
+    <span class="header-sep">/</span>
+    <h1 id="page-title">World War II</h1>
+    <span class="header-sep">—</span>
+    <div class="sub" id="page-subtitle">Year 10 History</div>
   </div>
-  <button id="open-present-btn">▶ Present</button>
+  <div class="header-bottom">
+    <button id="open-prompt-btn">✦ New Topic</button>
+    <div class="mode-group">
+      <select id="coaching-width-mode">  <option value="typical" selected>Typical Width</option>
+  <option value="minimum">Minimum Width</option>
+  <option value="wider">Wider</option></select>
+      <button id="open-learning-prompt-btn">Learning Activity Prompt</button>
+    </div>
+    <button id="open-present-btn">▶ Present</button>
+  </div>
 </header>
 
 <div class="main">
