@@ -105,6 +105,7 @@ function setupUI() {
   document.getElementById('generate-btn').addEventListener('click', async () => {
     const topic = document.getElementById('topic-input').value;
     const yearLevel = document.getElementById('year-input').value;
+    if (!topic || !yearLevel) { alert('Please enter a topic and year level before generating.'); return; }
     const inquiryQuestion = document.getElementById('inquiry-input').value;
 
     const widthMode = document.getElementById('width-mode').value;
@@ -173,7 +174,19 @@ function setupUI() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
-      document.getElementById('json-input').value = ev.target.result;
+      const raw = ev.target.result;
+      document.getElementById('json-input').value = raw;
+      // Populate form fields from stored meta if present
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed.topic)     document.getElementById('topic-input').value = parsed.topic;
+        if (parsed.yearLevel) document.getElementById('year-input').value = parsed.yearLevel;
+        if (parsed.journey?.text) document.getElementById('inquiry-input').value = parsed.journey.text;
+        if (parsed.width) {
+          const sel = document.getElementById('width-mode');
+          if ([...sel.options].some(o => o.value === parsed.width)) sel.value = parsed.width;
+        }
+      } catch {}
     };
     reader.readAsText(file);
     e.target.value = ''; // reset so same file can be re-imported

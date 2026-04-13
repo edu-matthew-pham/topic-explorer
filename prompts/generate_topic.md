@@ -8,6 +8,8 @@ Audience: {{yearLevel}}
 Follow this JSON schema exactly:
 {{schema}}
 
+{{metaInstruction}}
+
 CRITICAL INSTRUCTIONS:
 - Output valid JSON only
 - Do not include explanations

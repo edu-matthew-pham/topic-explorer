@@ -52,12 +52,19 @@ export async function generateTopicPrompt({ topic, yearLevel, inquiryQuestion, s
 - Every node should be a rich node; push toward 3 blocks for key nodes`,
   }[widthMode] || '';
 
+  // Inject meta fields instruction into schema preamble
+  const metaInstruction = `Include these top-level fields in your JSON output (alongside title, subtitle, overview, clusters):
+- "topic": "${topic}"
+- "yearLevel": "${yearLevel}"
+- "width": "${widthMode}"`;
+
   return renderTemplate(template, {
     topic,
     yearLevel,
     inquiryBlock,
     schema: JSON.stringify(schema, null, 2),
     widthInstruction,
+    metaInstruction,
   });
 }
 
