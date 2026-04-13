@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Learning Maps</title>
+<title>Topic Explorer</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -459,9 +459,9 @@
 <body>
 
 <header>
-  <h1 id="page-title">Learning Maps</h1>
+  <h1 id="page-title">Topic Exploration</h1>
   <div class="sub" id="page-subtitle"></div>
-  <button id="open-prompt-btn">New Map</button>
+  <button id="open-prompt-btn">New Topic</button>
 </header>
 
 <div class="main">
@@ -529,7 +529,7 @@
 </div>
 
 <div class="footer-note">
-  Minimal PoC for structured topic decomposition using Learning Maps.
+  Minimal PoC for structured and interactive topic exploration using clusters, nodes, and content blocks.
 </div>
 
 <div id="timeline-tooltip" class="timeline-tooltip"></div>
@@ -612,7 +612,7 @@ document.getElementById('load-map-btn').addEventListener('click', () => {
 }
 
 function initialise() {
-  document.getElementById('page-title').textContent = mapData.title || 'Learning Maps';
+  document.getElementById('page-title').textContent = mapData.title || 'Topic Exploration';
   document.getElementById('page-subtitle').textContent = mapData.subtitle || '';
 
   renderClusters();
@@ -1083,7 +1083,7 @@ function generatePrompt({ topic, inquiryQuestion, yearLevel }) {
  if (!schema) return "Schema not loaded yet.";
 
   return `
-You are generating a structured Learning Map for education.
+You are generating a structured Topic Explorer for education.
 
 Topic: ${topic}
 Audience: ${yearLevel}
@@ -1125,7 +1125,15 @@ CONTENT STYLE:
 - Highlight significance or interpretation where appropriate
 - Avoid generic textbook definitions
 
-Return only the JSON object.
+CRITICAL OUTPUT RULES:
+- Output MUST be valid JSON that can be parsed by JSON.parse()
+- Do NOT include line breaks inside string values
+- All strings must be single-line
+- Do NOT use trailing commas
+- Do NOT include markdown, backticks, or explanations
+- Ensure all URLs are fully contained on one line
+- Escape quotes properly inside strings
+- Return ONLY the JSON object
 `;
 }
 </script>
