@@ -461,7 +461,7 @@
 <header>
   <h1 id="page-title">Learning Maps</h1>
   <div class="sub" id="page-subtitle"></div>
-  <button id="open-prompt-btn">Prompt Generator</button>
+  <button id="open-prompt-btn">New Map</button>
 </header>
 
 <div class="main">
@@ -483,7 +483,8 @@
     <div class="detail-header" id="detail-header"></div>
     <div class="detail-body" id="detail-body">
     </div>
-    <div id="prompt-generator" style="display:none; padding:12px;">
+    
+    <div id="prompt-generator" style="display:none; padding:12px; border-top:1px solid var(--border);">
         <div style="font-size:12px; margin-bottom:6px;">Topic</div>
         <input id="topic-input" type="text" placeholder="e.g. World War II"
             style="width:100%; margin-bottom:10px; padding:6px;" />
@@ -492,12 +493,17 @@
         <input id="year-input" type="text" placeholder="e.g. Year 10"
             style="width:100%; margin-bottom:10px; padding:6px;" />
 
-        <button id="generate-btn" style="margin-bottom:10px;">
-            Generate Prompt
-        </button>
+        <button id="generate-btn" style="margin-bottom:10px;">Generate Prompt</button>
 
+        <div style="font-size:12px; margin-bottom:6px;">Prompt Output</div>
         <textarea id="prompt-output"
-            style="width:100%; height:200px; font-size:11px;"></textarea>
+            style="width:100%; height:180px; font-size:11px; margin-bottom:12px;"></textarea>
+
+        <div style="font-size:12px; margin-bottom:6px;">Generated JSON</div>
+        <textarea id="json-input"
+            style="width:100%; height:220px; font-size:11px; margin-bottom:10px;"></textarea>
+
+        <button id="load-map-btn">Load Map</button>
     </div>
   </aside>
 </div>
@@ -538,6 +544,10 @@ fetch(DATA_URL)
     `;
   });
 
+function hidePromptGenerator() {
+  document.getElementById('prompt-generator').style.display = 'none';
+}
+
 function setupUI() {
     document.getElementById('generate-btn').addEventListener('click', () => {
   const topic = document.getElementById('topic-input').value;
@@ -550,6 +560,24 @@ function setupUI() {
 document.getElementById('open-prompt-btn').addEventListener('click', () => {
   const panel = document.getElementById('prompt-generator');
   panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+});
+
+document.getElementById('load-map-btn').addEventListener('click', () => {
+  const raw = document.getElementById('json-input').value;
+
+  try {
+    const parsed = JSON.parse(raw);
+    mapData = parsed;
+    selectedClusterId = null;
+    selectedNodeIndex = null;
+    initialise();
+
+    document.getElementById('prompt-generator').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    alert('Invalid JSON. Check formatting and try again.');
+    console.error(err);
+  }
 });
 }
 
@@ -583,6 +611,7 @@ function renderClusters() {
     `;
 
     card.addEventListener('click', () => {
+      hidePromptGenerator(); 
       selectedClusterId = cluster.id;
       selectedNodeIndex = null;
       updateActiveClusterCards();
@@ -638,6 +667,7 @@ function renderNodesOverview() {
       <div class="node-desc">${cluster.description || ''}</div>
     `;
     card.addEventListener('click', () => {
+      hidePromptGenerator(); 
       selectedClusterId = cluster.id;
       selectedNodeIndex = null;
       updateActiveClusterCards();
@@ -681,6 +711,7 @@ function renderSelectedCluster() {
     `;
 
     card.addEventListener('click', () => {
+      hidePromptGenerator(); 
       selectedNodeIndex = index;
       updateActiveNodeCards();
       renderNodeDetail(cluster, node);
