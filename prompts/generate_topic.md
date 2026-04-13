@@ -8,8 +8,6 @@ Audience: {{yearLevel}}
 Follow this JSON schema exactly:
 {{schema}}
 
-{{widthInstruction}}
-
 CRITICAL INSTRUCTIONS:
 - Output valid JSON only
 - Do not include explanations
@@ -17,21 +15,11 @@ CRITICAL INSTRUCTIONS:
 - 4–6 clusters maximum
 - 3–4 nodes per cluster
 
-NODE DEPTH REQUIREMENTS:
+NODE REQUIREMENTS:
 - Each node must represent a meaningful sub-concept, not a keyword
 - Each node must include a clear explanation (description)
 
-CONTENT DEPTH REQUIREMENTS:
-- Each node should include 2–3 content elements where relevant
-- Minimum: 1 content block per node
-- Target: 1–2 content blocks per node
-- Rich nodes (key ideas only): 3 content blocks max
-- At least 1 node per cluster must be a "rich node"
-- Use a mix of:
-  - text (explanation or expansion)
-  - quote (evidence / historical voice)
-  - image (visual grounding where useful)
-  - timeline (only for change over time)
+{{widthInstruction}}
 
 CONTENT STYLE:
 - Write for Year Level: {{yearLevel}}

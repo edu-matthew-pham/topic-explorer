@@ -32,9 +32,24 @@ export async function generateTopicPrompt({ topic, yearLevel, inquiryQuestion, s
     : `No inquiry question provided. Create a meaningful guiding inquiry question that encourages historical thinking, causation, significance, or interpretation.`;
 
   const widthInstruction = {
-    minimum: 'WIDTH INSTRUCTION: Generate minimum width content — core concepts only, 1 content block per node, concise descriptions, no enrichment directions.',
-    typical: 'WIDTH INSTRUCTION: Generate typical width content — standard depth and breadth, 1–2 content blocks per node, balanced descriptions.',
-    wider:   'WIDTH INSTRUCTION: Generate wider content — extended exploration, 2–3 content blocks per node, include enrichment directions, alternative perspectives, and deeper significance.',
+    minimum: `CONTENT REQUIREMENTS (Minimum Width):
+- 1 content block per node maximum
+- Concise descriptions — core concept only
+- No enrichment directions or alternative perspectives
+- Use text blocks only unless a quote is essential
+- At least 1 node per cluster must have a quote`,
+    typical: `CONTENT REQUIREMENTS (Typical Width):
+- 1–2 content blocks per node
+- Balanced descriptions — explain the concept and its significance
+- Include some analytical framing (cause → consequence)
+- Use a mix of text and quotes; timeline only for change over time
+- At least 1 node per cluster must be a rich node (2 blocks)`,
+    wider: `CONTENT REQUIREMENTS (Wider Width):
+- 2–3 content blocks per node
+- Extended descriptions — include significance, interpretation, and enrichment directions
+- Include alternative perspectives and analytical framing throughout
+- Use a mix of text, quotes, and timelines where relevant
+- Every node should be a rich node; push toward 3 blocks for key nodes`,
   }[widthMode] || '';
 
   return renderTemplate(template, {
