@@ -125,6 +125,7 @@ function setupUI() {
       selectedNodeIndex = null;
       initialise();
       hidePromptGenerator();
+      window.goatcounter?.count({ path: 'load-map', title: 'Map loaded' });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       alert('Invalid JSON. Check formatting and try again.');
@@ -135,6 +136,7 @@ function setupUI() {
   // Present mode
   document.getElementById('open-present-btn').addEventListener('click', () => {
     if (!mapData) { alert('No topic loaded yet.'); return; }
+    window.goatcounter?.count({ path: 'present-clicked', title: 'Presentation opened' });
     startPresentation(mapData);
   });
 
@@ -149,6 +151,7 @@ function setupUI() {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = filename.endsWith('.json') ? filename : filename + '.json';
+    window.goatcounter?.count({ path: 'export-json', title: 'JSON exported' });
     a.click();
     URL.revokeObjectURL(a.href);
   });
@@ -177,6 +180,7 @@ function setupUI() {
     }
     const prompt = await generateLearningActivityPrompt(mapData);
     await navigator.clipboard.writeText(prompt);
+    window.goatcounter?.count({ path: 'learning-prompt-copied', title: 'Learning Activity Prompt copied' });
     alert('Learning Activity Prompt copied to clipboard.');
   });
 
