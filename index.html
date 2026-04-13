@@ -13,6 +13,7 @@
     --text: #f0ede8;
     --muted: #9a9790;
     --border: rgba(255,255,255,0.08);
+    --tooltip-bg: #111215;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -64,13 +65,8 @@
     flex-direction: column;
   }
 
-  .cluster-panel {
-    border-right: 1px solid var(--border);
-  }
-
-  .nodes-panel {
-    border-right: 1px solid var(--border);
-  }
+  .cluster-panel { border-right: 1px solid var(--border); }
+  .nodes-panel { border-right: 1px solid var(--border); }
 
   .panel-header {
     padding: 16px 18px 12px;
@@ -339,10 +335,85 @@
     color: var(--muted);
   }
 
-  .empty-state {
-    font-size: 12px;
-    line-height: 1.7;
-    color: var(--muted);
+  .timeline {
+    padding: 10px 12px;
+  }
+
+  .timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 10px;
+    align-items: start;
+    cursor: default;
+  }
+
+  .timeline-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.8;
+    padding-top: 2px;
+  }
+
+  .timeline-dotwrap {
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .timeline-dotwrap::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 7px;
+    bottom: -12px;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item:last-child .timeline-dotwrap::before {
+    display: none;
+  }
+
+  .timeline-dotwrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #b8b8b8;
+  }
+
+  .timeline-title {
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+
+  .timeline-tooltip {
+    position: fixed;
+    max-width: 240px;
+    background: var(--tooltip-bg);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--text);
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.28);
   }
 
   .footer-note {
@@ -416,6 +487,8 @@
 <div class="footer-note">
   Minimal PoC for structured topic decomposition using Learning Maps.
 </div>
+
+<div id="timeline-tooltip" class="timeline-tooltip"></div>
 
 <script>
 const DATA_URL = './ww2_learning_map.json';
@@ -714,8 +787,122 @@ function renderContentBlock(block) {
     return el;
   }
 
+  if (block.type === 'timeline') {
+    return renderTimelineSVG(block);
+  }
+
   el.innerHTML = `<div class="content-text">Unsupported content block type.</div>`;
   return el;
+}
+
+function renderTimelineSVG(block) {
+  const padding = 40;
+  const spacing = 120;
+  const height = 100;
+  const y = height / 2;
+
+  const totalWidth = padding * 2 + (block.items.length - 1) * spacing;
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", `0 0 ${totalWidth} ${height}`);
+  svg.style.width = "100%";
+  svg.style.height = height + "px";
+
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  line.setAttribute("x1", padding);
+  line.setAttribute("y1", y);
+  line.setAttribute("x2", totalWidth - padding);
+  line.setAttribute("y2", y);
+  line.setAttribute("stroke", "#888");
+  line.setAttribute("stroke-width", "1");
+  svg.appendChild(line);
+
+  block.items.forEach((item, i) => {
+    const x = padding + i * spacing;
+
+    const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    group.style.cursor = "default";
+
+    group.addEventListener("mouseenter", e => showTimelineTooltip(e, item.text));
+    group.addEventListener("mousemove", moveTimelineTooltip);
+    group.addEventListener("mouseleave", hideTimelineTooltip);
+
+    // invisible hover area
+    const hit = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    hit.setAttribute("x", x - 38);
+    hit.setAttribute("y", y - 28);
+    hit.setAttribute("width", 76);
+    hit.setAttribute("height", 56);
+    hit.setAttribute("fill", "transparent");
+    group.appendChild(hit);
+
+    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    dot.setAttribute("cx", x);
+    dot.setAttribute("cy", y);
+    dot.setAttribute("r", 5);
+    dot.setAttribute("fill", "#ccc");
+    group.appendChild(dot);
+
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", x);
+    label.setAttribute("y", y - 14);
+    label.setAttribute("text-anchor", "middle");
+    label.setAttribute("font-size", "10");
+    label.setAttribute("fill", "#aaa");
+    label.textContent = item.label;
+    group.appendChild(label);
+
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    title.setAttribute("x", x);
+    title.setAttribute("y", y + 20);
+    title.setAttribute("text-anchor", "middle");
+    title.setAttribute("font-size", "11");
+    title.setAttribute("fill", "#ddd");
+    title.textContent = item.title;
+    group.appendChild(title);
+
+    svg.appendChild(group);
+  });
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "content-block";
+  wrapper.style.overflowX = "auto";
+  wrapper.appendChild(svg);
+
+  return wrapper;
+}
+
+function showTimelineTooltip(event, text) {
+  const tip = document.getElementById('timeline-tooltip');
+  if (!text) return;
+  tip.textContent = text;
+  tip.style.display = 'block';
+  moveTimelineTooltip(event);
+}
+
+function moveTimelineTooltip(event) {
+  const tip = document.getElementById('timeline-tooltip');
+  if (tip.style.display !== 'block') return;
+
+  const offset = 14;
+  let left = event.clientX + offset;
+  let top = event.clientY + offset;
+
+  const rect = tip.getBoundingClientRect();
+  if (left + rect.width > window.innerWidth - 8) {
+    left = event.clientX - rect.width - offset;
+  }
+  if (top + rect.height > window.innerHeight - 8) {
+    top = event.clientY - rect.height - offset;
+  }
+
+  tip.style.left = `${left}px`;
+  tip.style.top = `${top}px`;
+}
+
+function hideTimelineTooltip() {
+  const tip = document.getElementById('timeline-tooltip');
+  tip.style.display = 'none';
 }
 
 function makeSection(labelText, contentText, muted = false) {

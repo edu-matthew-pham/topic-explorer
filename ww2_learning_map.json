@@ -38,6 +38,26 @@
               "type": "quote",
               "text": "The peace settlement after World War I became part of the story of how a later conflict emerged.",
               "source": "Draft learning note"
+            },
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "label": "1919",
+                  "title": "Treaty signed",
+                  "text": "Germany accepted harsh peace terms after World War I."
+                },
+                {
+                  "label": "1920s",
+                  "title": "Resentment grows",
+                  "text": "Economic hardship and political instability deepened anger in Germany."
+                },
+                {
+                  "label": "1930s",
+                  "title": "Revisionism rises",
+                  "text": "Nazi policy drew on widespread opposition to the treaty."
+                }
+              ]
             }
           ]
         },
@@ -51,6 +71,26 @@
               "type": "image",
               "src": "https://picsum.photos/seed/dictators/640/360",
               "caption": "Placeholder image for authoritarian leadership and propaganda."
+            },
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "label": "1922",
+                  "title": "Mussolini",
+                  "text": "Mussolini came to power in Italy."
+                },
+                {
+                  "label": "1933",
+                  "title": "Hitler",
+                  "text": "Hitler became Chancellor of Germany."
+                },
+                {
+                  "label": "1930s",
+                  "title": "Expansionism",
+                  "text": "Aggressive nationalist policies intensified across Europe and Asia."
+                }
+              ]
             }
           ]
         },
@@ -75,6 +115,26 @@
               "type": "quote",
               "text": "Appeasement is often discussed not just as a decision, but as a historical debate.",
               "source": "Draft learning note"
+            },
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "label": "1936",
+                  "title": "Rhineland",
+                  "text": "German remilitarisation met little resistance."
+                },
+                {
+                  "label": "1938",
+                  "title": "Munich",
+                  "text": "European leaders accepted German demands over Czechoslovakia."
+                },
+                {
+                  "label": "1939",
+                  "title": "Limits exposed",
+                  "text": "Appeasement ended when Germany invaded Poland."
+                }
+              ]
             }
           ]
         }
@@ -103,6 +163,26 @@
               "type": "image",
               "src": "https://picsum.photos/seed/pacific/640/360",
               "caption": "Placeholder image for the Pacific theatre."
+            },
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "label": "1941",
+                  "title": "Pearl Harbor",
+                  "text": "Japan attacked Pearl Harbor and expanded the war in the Pacific."
+                },
+                {
+                  "label": "1942",
+                  "title": "Darwin bombed",
+                  "text": "Australian vulnerability became more immediate and visible."
+                },
+                {
+                  "label": "1942",
+                  "title": "Kokoda",
+                  "text": "Campaigns in Papua became central to Australian memory."
+                }
+              ]
             }
           ]
         },
@@ -149,7 +229,34 @@
           "title": "D-Day",
           "subtitle": "1944",
           "description": "The Allied invasion of Normandy marked a decisive step in liberating Western Europe.",
-          "significance": "This node is often central in public memory, making it useful for comparing historical significance and commemoration."
+          "significance": "This node is often central in public memory, making it useful for comparing historical significance and commemoration.",
+          "content": [
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "label": "1940",
+                  "title": "France falls",
+                  "text": "Axis power expanded quickly in Western Europe."
+                },
+                {
+                  "label": "1941",
+                  "title": "US enters war",
+                  "text": "Pearl Harbor widened the scale of the conflict."
+                },
+                {
+                  "label": "1942–43",
+                  "title": "Stalingrad",
+                  "text": "German momentum weakened on the Eastern Front."
+                },
+                {
+                  "label": "1944",
+                  "title": "D-Day",
+                  "text": "Allied forces opened a major Western front."
+                }
+              ]
+            }
+          ]
         }
       ]
     },
