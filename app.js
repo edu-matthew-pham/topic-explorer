@@ -103,8 +103,8 @@ function setupUI() {
 
   // Generate topic prompt
   document.getElementById('generate-btn').addEventListener('click', async () => {
-    const topic = document.getElementById('topic-input').value;
-    const yearLevel = document.getElementById('year-input').value;
+    const topic = document.getElementById('topic-input').value.trim();
+    const yearLevel = document.getElementById('year-input').value.trim();
     if (!topic || !yearLevel) { alert('Please enter a topic and year level before generating.'); return; }
     const inquiryQuestion = document.getElementById('inquiry-input').value;
 
@@ -199,9 +199,11 @@ function setupUI() {
       return;
     }
     const widthMode = document.getElementById('coaching-width-mode')?.value || 'typical';
+    const contentWidth = document.getElementById('width-mode')?.value || 'typical';
     const prompt = await generateLearningActivityPrompt(mapData, widthMode);
     await navigator.clipboard.writeText(prompt);
     window.goatcounter?.count({ path: 'learning-prompt-copied', title: 'Learning Activity Prompt copied' });
+    window.goatcounter?.count({ path: `width-combo-${contentWidth}-${widthMode}`, title: `Width combo: content=${contentWidth} coach=${widthMode}` });
     alert('Learning Activity Prompt copied to clipboard.');
   });
 
